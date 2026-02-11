@@ -1,7 +1,6 @@
 package com.educandoweb.course.entities;
 
 import com.educandoweb.course.entities.enums.OrderStatus;
-import com.educandoweb.course.entities.pk.OrderItemPK;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -75,10 +74,6 @@ public class Order implements Serializable {
         this.client = client;
     }
 
-    public Set<OrderItem> getItems() {
-        return items;
-    }
-
     public Payment getPayment() {
         return payment;
     }
@@ -86,6 +81,20 @@ public class Order implements Serializable {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
+
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    public Double getTotal() {
+        double sum = 0.0;
+        for(OrderItem x : items) {
+            sum += x.getSubTotal();
+        }
+        return sum;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
